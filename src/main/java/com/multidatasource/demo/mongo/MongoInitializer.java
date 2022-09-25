@@ -23,7 +23,7 @@ public class MongoInitializer {
     public void init(){
         this.documentRepository.deleteAll();
         documentRepository.save(MongoDocument.builder().dbIdentifier("MongoDB").unknownObject(new KnownObjectExample(1L,"No property provided")).build());
-        documentRepository.save(MongoDocument.builder().dbIdentifier("MongoDB").unknownObject(new DifferentKnowObjectExample(1L,"provided property")).build());
+        documentRepository.save(MongoDocument.builder().dbIdentifier("MongoDB").unknownObject(new DifferentKnownObjectExample(1L,"provided property")).build());
 
     }
     // Predicate filter
