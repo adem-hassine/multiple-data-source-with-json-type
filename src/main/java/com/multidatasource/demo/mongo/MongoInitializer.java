@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @RequiredArgsConstructor
@@ -37,7 +38,7 @@ public class MongoInitializer {
         }
         assert booleanBuilder.getValue() != null;
         return StreamSupport.stream(documentRepository.findAll(booleanBuilder.getValue()).spliterator(), false)
-                .toList();
+                .collect(Collectors.toList());
     }
 
 
