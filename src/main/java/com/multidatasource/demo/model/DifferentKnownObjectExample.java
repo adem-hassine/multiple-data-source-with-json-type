@@ -1,4 +1,4 @@
-package com.multidatasource.demo.mongo;
+package com.multidatasource.demo.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-// another defined object type example for MongoDocument model
 public class DifferentKnownObjectExample {
     private Long id;
     private String anotherProperty;
