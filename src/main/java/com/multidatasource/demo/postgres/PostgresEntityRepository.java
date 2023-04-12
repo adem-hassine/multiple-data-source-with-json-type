@@ -5,5 +5,5 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EntityRepository extends JpaRepository<PostgresEntity,Long>, QuerydslPredicateExecutor<PostgresEntity> {
+public interface PostgresEntityRepository extends JpaRepository<PostgresEntity,Long>, QuerydslPredicateExecutor<PostgresEntity> {
 }
