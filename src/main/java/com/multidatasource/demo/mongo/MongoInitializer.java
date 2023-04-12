@@ -1,5 +1,7 @@
 package com.multidatasource.demo.mongo;
 
+import com.multidatasource.demo.model.DifferentKnownObjectExample;
+import com.multidatasource.demo.model.KnownObjectExample;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.PathBuilder;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +20,7 @@ import java.util.stream.StreamSupport;
 @RestController
 @RequestMapping("/documents")
 public class MongoInitializer {
-    private final DocumentRepository documentRepository;
+    private final MongoDocumentRepository documentRepository;
     @PostConstruct
     // Data initializing with multiple objects
     public void init(){
@@ -30,6 +32,7 @@ public class MongoInitializer {
     // Predicate filter
     // support dynamic filter on all different object stored in mongoDocument model example
     @GetMapping
+
     public List<MongoDocument> findAll(@RequestParam Map<String,String> searchCriteria){
         PathBuilder<MongoDocument> mongoDocumentPathBuilder = new PathBuilder<>(MongoDocument.class,"mongoDocument");
         BooleanBuilder booleanBuilder= new BooleanBuilder();

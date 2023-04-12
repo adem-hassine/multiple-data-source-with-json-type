@@ -5,5 +5,5 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DocumentRepository extends MongoRepository<MongoDocument,String> , QuerydslPredicateExecutor<MongoDocument> {
+public interface MongoDocumentRepository extends MongoRepository<MongoDocument,String> , QuerydslPredicateExecutor<MongoDocument> {
 }
