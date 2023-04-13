@@ -27,6 +27,7 @@ public class SQLServerInitializer {
 
     @PostConstruct
     public void init() {
+        this.sqlEntityRepository.deleteAll();
         sqlEntityRepository.save(SQLServerEntity.builder().dbIdentifier("SQLServer").unknownObject(new KnownObjectExample(1L,"No property provided")).build());
         sqlEntityRepository.save(SQLServerEntity.builder().dbIdentifier("SQLServer").unknownObject(new DifferentKnownObjectExample(1L,"provided property")).build());
 

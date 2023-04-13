@@ -23,6 +23,7 @@ public class PostgresInitializer {
 
     @PostConstruct
     public void init() {
+        this.entityRepository.deleteAll();
         entityRepository.save(PostgresEntity.builder().dbIdentifier("PostgreSQL").unknownObject(new KnownObjectExample(1L,"No property provided")).build());
         entityRepository.save(PostgresEntity.builder().dbIdentifier("PostgreSQL").unknownObject(new DifferentKnownObjectExample(1L,"provided property")).build());
 
