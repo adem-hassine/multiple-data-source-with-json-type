@@ -18,7 +18,7 @@ import java.util.stream.StreamSupport;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/documents")
+@RequestMapping("/mongo")
 public class MongoInitializer {
     private final MongoDocumentRepository documentRepository;
     @PostConstruct

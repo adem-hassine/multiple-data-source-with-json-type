@@ -17,7 +17,7 @@ import java.util.stream.StreamSupport;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/entities")
+@RequestMapping("/postgresql")
 public class PostgresInitializer {
     private final PostgresEntityRepository entityRepository;
 

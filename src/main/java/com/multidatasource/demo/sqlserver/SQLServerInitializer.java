@@ -3,20 +3,18 @@ package com.multidatasource.demo.sqlserver;
 import com.multidatasource.demo.model.DifferentKnownObjectExample;
 import com.multidatasource.demo.model.KnownObjectExample;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 @RestController
+@RequestMapping("/sqlserver")
 public class SQLServerInitializer {
 
     private final SQLServerEntityRepository sqlEntityRepository;
@@ -40,9 +38,12 @@ public class SQLServerInitializer {
         Root<SQLServerEntity> root = criteriaQuery.from(SQLServerEntity.class);
         List<Predicate> predicates = new ArrayList<>();
         for (Map.Entry<String,String> criteria : searchCriteria.entrySet()){
-            predicates.add(criteriaBuilder.equal(root.get(criteria.getKey()),criteria.getValue()));
+            predicates.add(criteriaBuilder.like(retrieveJsonAttribute(criteriaBuilder,root,"unknownObject",criteria.getKey()),"%"+criteria.getValue()+"%"));
         }
         return entityManager.createQuery(criteriaQuery.where(predicates.toArray(Predicate[]::new))).getResultList();
+    }
+    public Expression<String> retrieveJsonAttribute(CriteriaBuilder cb, Root<?> root, String columnName, String path) {
+        return cb.function("JSON_VALUE", String.class,root.get(columnName),  cb.literal("$."+ path));
     }
 }
 
