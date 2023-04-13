@@ -22,15 +22,12 @@ import java.util.stream.StreamSupport;
 public class MongoInitializer {
     private final MongoDocumentRepository documentRepository;
     @PostConstruct
-    // Data initializing with multiple objects
     public void init(){
         this.documentRepository.deleteAll();
         documentRepository.save(MongoDocument.builder().dbIdentifier("MongoDB").unknownObject(new KnownObjectExample(1L,"No property provided")).build());
         documentRepository.save(MongoDocument.builder().dbIdentifier("MongoDB").unknownObject(new DifferentKnownObjectExample(1L,"provided property")).build());
 
     }
-    // Predicate filter
-    // support dynamic filter on all different object stored in mongoDocument model example
     @GetMapping
 
     public List<MongoDocument> findAll(@RequestParam Map<String,String> searchCriteria){

@@ -8,7 +8,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-// defined object type example for MongoDocument model
 public class KnownObjectExample{
     private Long id;
     private String property;

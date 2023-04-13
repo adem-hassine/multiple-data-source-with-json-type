@@ -16,6 +16,5 @@ public class MongoDocument {
     @GeneratedValue
     private String id;
     private String dbIdentifier;
-    // the reason made me interested in using mongoDB because this entity may hold different objects types when the application where purely SQL
     private Object unknownObject;
 }
