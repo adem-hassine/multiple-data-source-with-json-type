@@ -7,7 +7,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -30,31 +29,27 @@ public class PostgresDataSourceConfigurer {
     @Value("${postgres.dialect}")
     private String hibernateDialectClazzName;
 
-    @Primary
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSourceProperties postgreSQLDataSourceProperties() {
         return new DataSourceProperties();
     }
 
-    @Primary
     @Bean
     public DataSource postgreSQLDataSource(@Qualifier("postgreSQLDataSourceProperties") DataSourceProperties dataSourceProperties) {
         return dataSourceProperties.initializeDataSourceBuilder().build();
     }
 
-    @Primary
     @Bean
     public LocalContainerEntityManagerFactoryBean postgreSQLEntityManagerFactory(@Qualifier("postgreSQLDataSource") DataSource hubDataSource, EntityManagerFactoryBuilder builder) {
-        Map<String,String> properties = new HashMap<>() ;
-        properties.put("hibernate.dialect",hibernateDialectClazzName);
+        Map<String, String> properties = new HashMap<>();
+        properties.put("hibernate.dialect", hibernateDialectClazzName);
         properties.put("hibernate.hbm2ddl.auto", "update");
         properties.put("hibernate.show_sql", "true");
         return builder.dataSource(hubDataSource).properties(properties).packages("com.multidatasource.demo.postgres")
                 .persistenceUnit("postgreSQL").build();
     }
 
-    @Primary
     @Bean
     public PlatformTransactionManager postgreSQLTransactionManager(@Qualifier("postgreSQLEntityManagerFactory") EntityManagerFactory factory) {
         return new JpaTransactionManager(factory);

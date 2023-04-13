@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -27,20 +28,27 @@ import java.util.Map;
 public class SQLServerDataSourceConfigurer {
     @Value("${sqlserver.dialect}")
     private String hibernateDialectClazzName;
+
+
+    @Primary
+
     @Bean
     @ConfigurationProperties(prefix = "sqlserver.datasource")
     public DataSourceProperties sqlServerDataSourceProperties() {
         return new DataSourceProperties();
     }
+
+    @Primary
     @Bean
     public DataSource sqlServerDataSource(@Qualifier("sqlServerDataSourceProperties") DataSourceProperties dataSourceProperties) {
         return dataSourceProperties.initializeDataSourceBuilder().build();
     }
 
+    @Primary
     @Bean(name = "sqlServerEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean sqlServerEntityManagerFactory(@Qualifier("sqlServerDataSource") DataSource sqlServerDataSource, EntityManagerFactoryBuilder builder) {
-        Map<String,String> properties = new HashMap<>();
-        properties.put("hibernate.dialect",hibernateDialectClazzName);
+        Map<String, String> properties = new HashMap<>();
+        properties.put("hibernate.dialect", hibernateDialectClazzName);
         properties.put("hibernate.hbm2ddl.auto", "update");
         properties.put("hibernate.show_sql", "true");
         return builder.dataSource(sqlServerDataSource)
@@ -51,6 +59,7 @@ public class SQLServerDataSourceConfigurer {
 
     }
 
+    @Primary
     @Bean
     public PlatformTransactionManager sqlServerTransactionManager(@Qualifier("sqlServerEntityManagerFactory")
                                                                   EntityManagerFactory factory) {
